@@ -1,27 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import HeaderComponent from './Header';
 import HealthTopicsCardComponent from '../Common/HealthTopicsCard';
 import LatestNewsCardComponent from '../Common/LatestNewsCard'
 import styles from '../Styles/landing.module.css';
-import { get, post } from '../Utils/api';
+import useFetch from '../Hooks/useFetch'
 
 const DashboardComponent = () => {
-    const [ dashboardData, setDashboardData ] = useState({});
-
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await get('https://run.mocky.io/v3/062aafe1-c5f8-4eea-9aef-570405ea602f'); 
-            setDashboardData(response.data)
-          } catch (err) {
-            console.error(err);
-          } finally {
-          
-          }
-        };
-    
-        fetchData();
-      }, [])
+    const { dashboardData, loading, error } = useFetch('https://run.mocky.io/v3/062aafe1-c5f8-4eea-9aef-570405ea602f');
 
     const displayHealthTopics = () => {
         return (
@@ -54,6 +39,8 @@ const DashboardComponent = () => {
         <>
            <HeaderComponent />
            <div className={styles.container}>
+            {loading && <h1>Loading...</h1>}
+            {error &&  <p>Error: {error}</p>}
             {dashboardData && dashboardData?.healthTopics && displayHealthTopics()}
             {dashboardData && dashboardData?.healthTopics && displayHealthNews()}
            </div>
