@@ -1,7 +1,19 @@
-import styles from '../Styles/dashboard.module.css'
+import React, { useState } from 'react';
+import styles from '../Styles/dashboard.module.css';
+import SimpleCardComponent from  '../Common/SimpleCard'
 import { Link } from 'react-router-dom';
 
 const DashboardComponent = () => {
+    const [userData, setUserData] = useState({
+        name: 'John',
+        appointmentData :{
+            appointmentHead: 'Upcoming Appointments',
+            appointments: [
+                'Next appointment: Dr. Smith on June 15, 2023 at 10:00 AM',
+                'Following: Dr. Johnson on June 22, 2023 at 2:00 PM'
+            ]
+        }
+    });
     return (
         <>
           <div className={styles.container}>
@@ -30,7 +42,10 @@ const DashboardComponent = () => {
                     </ul>
                 </nav>
             </div>
-            <div className={styles.contentSection}>Content</div>  
+            {userData && <div className={styles.contentSection}>
+                <div className={styles.contentHeading}>Welcome, {userData?.name}</div> 
+                <SimpleCardComponent cardData={userData?.appointmentData}/>   
+            </div>}
           </div>  
         </>
     )

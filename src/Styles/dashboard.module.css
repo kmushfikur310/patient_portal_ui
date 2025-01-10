@@ -14,6 +14,7 @@
 .contentSection {
     width: 85%;
     background: #ffff;
+    padding: 60px 20px;
 }
 
 .navSectionHeader {
@@ -38,4 +39,19 @@
 .active {
     font-weight: bold;
     font-size: 16px;
+}
+
+.contentHeading {
+    font-weight: bold;
+    font-size: 32px;
+    padding-bottom: 20px;
+}
+
+.card {
+    background-color: white; /* White background */
+    border: 1px solid #ddd;  /* Light gray border */
+    border-radius: 8px;      /* Rounded corners */
+    padding: 20px;           /* Padding around content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
 }
