@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
 import styles from '../Styles/dashboard.module.css';
 import CommonListCardComponent from '../Common/CommonCard';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+
 import { get, post } from '../Utils/api';
 
-
 const DashboardComponent = () => {
+    const navigate = useNavigate();
     const [userData, setUserData] = useState({
         name: 'John',
         appointmentData :{
@@ -61,6 +64,10 @@ const DashboardComponent = () => {
         
     },[])
 
+    const handleLogout = () => {
+        sessionStorage.removeItem("authToken");
+        navigate("/login");
+    }
     // https://run.mocky.io/v3/f9ea2727-fafe-44a7-963c-c084714ecb82
 
     return (
@@ -86,7 +93,7 @@ const DashboardComponent = () => {
                             <Link to="/">Messages</Link>
                         </li>
                         <li>
-                            <Link to="/login">Logout</Link>
+                            <Button style={{ color: "#FFF", textTransform: "capitalize" }} onClick={handleLogout}>Logout</Button>
                         </li>
                     </ul>
                 </nav>
