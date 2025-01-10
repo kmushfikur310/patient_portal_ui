@@ -1,6 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { 
+        Button,
+        FormControl,
+        InputLabel,
+        Select,
+        MenuItem
+        } from '@mui/material/';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -12,10 +18,7 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material/styles';
-// import ForgotPassword from './ForgotPassword';
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
-// import AppTheme from '../shared-theme/AppTheme';
-// import ColorModeSelect from '../shared-theme/ColorModeSelect';
+import { get, post } from '../Utils/api';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -65,18 +68,35 @@ const BookAppointment = (props) => {
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-    const [loginDetails, setLoginDetails] = React.useState({
-        email: "",
-        password: ""
+    const [timeSlot, setTimeSlot] = React.useState("");
+    const [appointmentDetails, setAppointmentDetails] = React.useState({
+        doctorName: "",
+        patientId: "",
+        doctorId: "",
+        timeslot: "",
+        appointmentDescription: "",
+        additionalInfo: ""
     });
+    const [doctors, setDoctors] = React.useState([]);
+    const [selectedDate, setSelectedDate] = React.useState(null);
 
-    const handleLoginInput = e => {
+    const handleDateChange = (newDate) => {
+        setSelectedDate(newDate);  // Storing the date in state
+        console.log('Selected Date:', newDate?.format('YYYY-MM-DD')); // Optional logging
+    };
+
+    const handleChangeInput = e => {
         const { name, value } = e.target;
-        setLoginDetails(prevDetails => ({
+        setAppointmentDetails(prevDetails => ({
             ...prevDetails,
             [name]: value
         }));
     };
+
+    const getTimeSlot  = (slot) => {
+        debugger
+        setTimeSlot(slot);
+    }
 
     const handleSubmit = (event) => {
         if (emailError || passwordError) {
@@ -116,6 +136,21 @@ const BookAppointment = (props) => {
 
         return isValid;
     };
+    const getDoctors = async() => {
+        debugger
+        try {
+            const response = await get('/api/auth/signup');
+            setDoctors(response.data);
+            navigate("/login");
+        } catch (err) {
+            console.error(err);
+        } 
+    }
+    React.useEffect(() => {
+        getDoctors();
+    }, []);
+    // console.log(appointmentDetails, timeSlot, selectedDate);
+    console.log(doctors);
     return (
         <AppointmentContainer direction="column" justifyContent="space-between">
             <Card variant="outlined">
@@ -128,18 +163,31 @@ const BookAppointment = (props) => {
                     <div style={{ margin: "10px" }}>
                         <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                             <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="outlined-required"
-                                    label="Required"
-                                    defaultValue="Hello World"
-                                />
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Select Doctor</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        name="doctorName"
+                                        value={appointmentDetails.doctorName}
+                                        label="Age"
+                                        onChange={e => handleChangeInput(e)}
+                                    >
+                                        <MenuItem value={10}>Ten</MenuItem>
+                                        <MenuItem value={20}>Twenty</MenuItem>
+                                        <MenuItem value={30}>Thirty</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={12}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-                                        <DatePicker label="Basic date picker" sx={{ width: '100%' }} />
+                                        <DatePicker 
+                                            label="Basic date picker" 
+                                            sx={{ width: '100%' }} 
+                                            value={selectedDate}
+                                            onChange={handleDateChange}
+                                        />
                                     </DemoContainer>
                                 </LocalizationProvider>
                             </Grid>
@@ -151,44 +199,50 @@ const BookAppointment = (props) => {
                         </Typography>
                         <Grid container rowSpacing={3}>
                             <Grid item xs={4}>
-                                <Button variant="outlined">9:00 AM</Button>
+                                <Button onClick={e => getTimeSlot("09:00-09:30")} variant="outlined">9:00 AM - 9:30 AM</Button>
                             </Grid>
                             <Grid item xs={4}>
-                                <Button variant="outlined">9:30 AM</Button>
+                                <Button onClick={e => getTimeSlot("09:30-10:00")} variant="outlined">9:30 AM - 10:100 AM</Button>
                             </Grid>
                             <Grid item xs={4}>
-                                <Button variant="outlined">9:30 AM</Button>
+                                <Button onClick={e => getTimeSlot("10:00-10:30")} variant="outlined">10:00 AM - 10:30 AM</Button>
                             </Grid>
                             <Grid item xs={4}>
-                                <Button variant="outlined">9:30 AM</Button>
+                                <Button onClick={e => getTimeSlot("10:30-11:00")} variant="outlined">10:30 AM - 11:00 AM</Button>
                             </Grid>
                             <Grid item xs={4}>
-                                <Button variant="outlined">9:30 AM</Button>
+                                <Button onClick={e => getTimeSlot("11:00-11:30")} variant="outlined">11:0 AM - 11:30 AM</Button>
                             </Grid>
                             <Grid item xs={4}>
-                                <Button variant="outlined">9:30 AM</Button>
+                                <Button onClick={e => getTimeSlot("11:30-12:00")} variant="outlined">11:30 AM - 12:00 PM</Button>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                            <TextField
+                                <TextField
                                     id="outlined-multiline-static"
                                     label="Reason for Visit"
                                     style={{ width: "100%" }}
                                     multiline
+                                    name="appointmentDescription"
+                                    value={appointmentDetails.appointmentDescription}
+                                    onChange={e => handleChangeInput(e)}
                                     rows={3}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                            <TextField
+                                <TextField
                                     id="outlined-multiline-static"
                                     label="Additional Notes (Optional)"
                                     style={{ width: "100%" }}
                                     multiline
+                                    name="additionalInfo"
+                                    value={appointmentDetails.additionalInfo}
+                                    onChange={e => handleChangeInput(e)}
                                     rows={3}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <Button style={{ width: "100%" }} variant="contained">
-                                Confirm Booking
+                                    Confirm Booking
                                 </Button>
                             </Grid>
                         </Grid>
