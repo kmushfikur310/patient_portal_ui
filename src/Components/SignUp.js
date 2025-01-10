@@ -61,25 +61,27 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     },
 }));
 
-export default function SignIn(props) {
+export default function SignUp(props) {
     const navigate = useNavigate();
     const [emailError, setEmailError] = React.useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-    const [loginDetails, setLoginDetails] = React.useState({
+    const [signupDetails, setSignupDetails] = React.useState({
+        firstName: "",
+        lastName: "",
         email: "",
         password: ""
     });
 
-    const handleLoginInput = e => {
+    const handleSignUpInput = e => {
         const { name, value } = e.target;
-        setLoginDetails(prevDetails => ({
+        setSignupDetails(prevDetails => ({
             ...prevDetails,
             [name]: value
         }));
     };
-    console.log(loginDetails);
+    console.log(signupDetails);
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -133,8 +135,8 @@ export default function SignIn(props) {
         navigate("/dashboard");
     }
 
-    const takeToRegister = () => {
-        navigate("/register");
+    const takeToLogin = () => {
+        navigate("/login");
     }
 
     return (
@@ -149,7 +151,7 @@ export default function SignIn(props) {
                     variant="h4"
                     sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', textAlign: "center", color: "#0099d7" }}
                 >
-                    Login
+                    Sign Up
                 </Typography>
                 <Box
                     noValidate
@@ -161,6 +163,42 @@ export default function SignIn(props) {
                     }}
                 >
                     <FormControl>
+                        <FormLabel htmlFor="email">First Name</FormLabel>
+                        <TextField
+                            error={emailError}
+                            helperText={emailErrorMessage}
+                            id="firstName"
+                            type="firstName"
+                            name="firstName"
+                            value={signupDetails.firstName}
+                            placeholder="First Name"
+                            autoFocus
+                            required
+                            fullWidth
+                            variant="outlined"
+                            onChange={e => handleSignUpInput(e)}
+                            color={emailError ? 'error' : 'primary'}
+                        />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel htmlFor="email">Last Name</FormLabel>
+                        <TextField
+                            error={emailError}
+                            helperText={emailErrorMessage}
+                            id="email"
+                            type="lastName"
+                            name="lastName"
+                            value={signupDetails.lastName}
+                            placeholder="Last Name"
+                            autoFocus
+                            required
+                            fullWidth
+                            variant="outlined"
+                            onChange={e => handleSignUpInput(e)}
+                            color={emailError ? 'error' : 'primary'}
+                        />
+                    </FormControl>
+                    <FormControl>
                         <FormLabel htmlFor="email">Email</FormLabel>
                         <TextField
                             error={emailError}
@@ -168,13 +206,14 @@ export default function SignIn(props) {
                             id="email"
                             type="email"
                             name="email"
+                            value={signupDetails.email}
                             placeholder="your@email.com"
                             autoComplete="email"
                             autoFocus
                             required
                             fullWidth
                             variant="outlined"
-                            onChange={e => handleLoginInput(e)}
+                            onChange={e => handleSignUpInput(e)}
                             color={emailError ? 'error' : 'primary'}
                         />
                     </FormControl>
@@ -187,12 +226,13 @@ export default function SignIn(props) {
                             placeholder="••••••"
                             type="password"
                             id="password"
+                            value={signupDetails.password}
                             autoComplete="current-password"
                             autoFocus
                             required
                             fullWidth
                             variant="outlined"
-                            onChange={e => handleLoginInput(e)}
+                            onChange={e => handleSignUpInput(e)}
                             color={passwordError ? 'error' : 'primary'}
                         />
                     </FormControl>
@@ -203,25 +243,16 @@ export default function SignIn(props) {
                         style={{ backgroundColor: "#8bc63f", color: "#FFF" }}
                         onClick={userLogin}
                     >
-                        Login
+                        Sign Up
                     </Button>
                     <Link
                         component="button"
                         type="button"
-                        onClick={handleClickOpen}
+                        onClick={takeToLogin}
                         variant="body2"
                         sx={{ alignSelf: 'center', color: "#0099d7" }}
                     >
-                        Forgot Password?
-                    </Link>
-                    <Link
-                        component="button"
-                        type="button"
-                        onClick={takeToRegister}
-                        variant="body2"
-                        sx={{ alignSelf: 'center', color: "#0099d7" }}
-                    >
-                        New User? Register here
+                        Already have an Account? Login here
                     </Link>
                 </Box>
             </Card>

@@ -1,13 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Divider from '@mui/material/Divider';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -140,18 +137,16 @@ const BookAppointment = (props) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="outlined-disabled"
-                                    label="Disabled"
-                                    defaultValue="Hello World"
-                                />
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
+                                        <DatePicker label="Basic date picker" sx={{ width: '100%' }} />
+                                    </DemoContainer>
+                                </LocalizationProvider>
                             </Grid>
                         </Grid>
                     </div>
                     <div style={{ margin: "10px" }}>
-                        <Typography>
+                        <Typography variant="subtitle1" sx={{ marginBottom: "20px" }}>
                             Available Time Slots
                         </Typography>
                         <Grid container rowSpacing={3}>
@@ -172,6 +167,29 @@ const BookAppointment = (props) => {
                             </Grid>
                             <Grid item xs={4}>
                                 <Button variant="outlined">9:30 AM</Button>
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                            <TextField
+                                    id="outlined-multiline-static"
+                                    label="Reason for Visit"
+                                    style={{ width: "100%" }}
+                                    multiline
+                                    rows={3}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                            <TextField
+                                    id="outlined-multiline-static"
+                                    label="Additional Notes (Optional)"
+                                    style={{ width: "100%" }}
+                                    multiline
+                                    rows={3}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button style={{ width: "100%" }} variant="contained">
+                                Confirm Booking
+                                </Button>
                             </Grid>
                         </Grid>
                     </div>
