@@ -1,7 +1,9 @@
 const DashboardComponent = () => {
-    return (<div>
-        Dashboard component
-    </div>)
+    return (
+        <>
+            
+        </>
+    )
 }
 
 export default DashboardComponent;
