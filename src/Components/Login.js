@@ -138,6 +138,7 @@ export default function SignIn(props) {
         try {
             const response = await post('api/auth/signin', JSON.stringify(loginDetails));
             sessionStorage.setItem("authToken", response?.data?.accessToken);
+            sessionStorage.setItem("role", response?.data?.role);
             setLoggedinUserDetails(response.data)
             navigate("/dashboard");
         } catch (err) {
