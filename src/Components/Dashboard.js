@@ -39,20 +39,26 @@ const DashboardComponent = () => {
     });
 
     useEffect(() => {
+        const role = sessionStorage.getItem('role');
 
+        if(role === "doctor"){
+            const fetchData = async () => {
+                try {
+                  const response = await get('http://localhost:8080/api/appointment/getTodaysAppointments'); 
+                  setUserData(response.data)
+                } catch (err) {
+                  console.error(err);
+                } finally {
+                
+                }
+              };
+          
+              fetchData();
+        }else{
 
-        const fetchData = async () => {
-            try {
-              const response = await get('http://localhost:8080/api/appointment/getTodaysAppointments'); 
-              setUserData(response.data)
-            } catch (err) {
-              console.error(err);
-            } finally {
-            
-            }
-          };
-      
-          fetchData();
+        }
+
+        
     },[])
 
     // https://run.mocky.io/v3/f9ea2727-fafe-44a7-963c-c084714ecb82
