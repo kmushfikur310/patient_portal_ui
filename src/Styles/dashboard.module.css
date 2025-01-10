@@ -1,0 +1,41 @@
+.container {
+    width: 100%;
+    display: flex;
+}
+
+.navSection {
+    width: 15%;
+    height: 100vh;
+    background: #0099d7;
+    color: #ffff;
+    padding: 40px 20px;
+}
+
+.contentSection {
+    width: 85%;
+    background: #ffff;
+}
+
+.navSectionHeader {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.navSectionLinks {
+    ul {
+        list-style-type: none;
+        padding-left: 0px;
+    }
+    a {
+        text-decoration: none;
+        list-style-type: none;
+        color: #ffff;
+        padding: 10px;
+        display: block;
+    }
+}
+
+.active {
+    font-weight: bold;
+    font-size: 16px;
+}

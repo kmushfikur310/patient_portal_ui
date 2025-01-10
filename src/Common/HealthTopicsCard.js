@@ -9,18 +9,18 @@ import styles from '../Styles/landing.module.css'
 export default function HealthTopicsCardComponent({cardData}) {
     console.log('props', cardData);
   return (
-    <Card sx={{ maxWidth: 345 }} className={styles.topicCard}>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {cardData?.heading}
-        </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {cardData?.description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" className={styles.greenButton}>Learn More</Button>
-      </CardActions>
+    <><Card sx={{ maxWidth: 345 }} className={styles.topicCard}>
+          <CardContent className={styles.cardContent}>
+          <Typography gutterBottom variant="h5" component="div">
+              {cardData?.heading}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {cardData?.description}
+          </Typography>
+      </CardContent><CardActions>
+              <Button size="small" className={styles.greenButton}>Learn More</Button>
+          </CardActions>
     </Card>
+    </>
   );
 }
