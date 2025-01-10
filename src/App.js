@@ -1,3 +1,4 @@
+import React from "react";
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DashboardComponent from './Components/Dashboard';
@@ -7,6 +8,8 @@ import BookAppointment from './Components/BookAppointment';
 import LandingPage from './Components/LandingPage';
 
 function App() {
+  const authToken = sessionStorage.getItem("authToken") || null;
+
   return (
     <Router>
       <Routes>

@@ -14,10 +14,8 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import {useNavigate} from 'react-router-dom'
 import { styled } from '@mui/material/styles';
-// import ForgotPassword from './ForgotPassword';
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
-// import AppTheme from '../shared-theme/AppTheme';
-// import ColorModeSelect from '../shared-theme/ColorModeSelect';
+import { get, post } from '../Utils/api';
+import toastr from 'toastr';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -71,6 +69,7 @@ export default function SignIn(props) {
         email: "",
         password: ""
     });
+    const [loggedinUserDetails, setLoggedinUserDetails] = React.useState(null);
 
     const handleLoginInput = e => {
         const { name, value } = e.target;
@@ -129,9 +128,24 @@ export default function SignIn(props) {
         return isValid;
     };
 
-    const userLogin = () => {
-        navigate("/dashboard");
-    }
+    const userLogin = async () => {
+        if (loginDetails.email === "") {
+            return toastr.success("Email id is required");
+        }
+        if (loginDetails.password === "") {
+            return toastr.success("Password is required");
+        }
+        try {
+            const response = await post('api/auth/signin', JSON.stringify(loginDetails));
+            sessionStorage.setItem("authToken", response?.data?.accessToken);
+            setLoggedinUserDetails(response.data)
+            navigate("/dashboard");
+        } catch (err) {
+            console.error(err);
+        } finally {
+
+        }
+    };
 
     const takeToRegister = () => {
         navigate("/register");

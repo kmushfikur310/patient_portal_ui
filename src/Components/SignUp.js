@@ -12,12 +12,10 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material/styles';
-// import ForgotPassword from './ForgotPassword';
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
-// import AppTheme from '../shared-theme/AppTheme';
-// import ColorModeSelect from '../shared-theme/ColorModeSelect';
+import { get, post } from '../Utils/api';
+import toastr from 'toastr';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -68,11 +66,16 @@ export default function SignUp(props) {
     const [passwordError, setPasswordError] = React.useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
     const [signupDetails, setSignupDetails] = React.useState({
-        firstName: "",
-        lastName: "",
+        firstname: "",
+        lastname: "",
         email: "",
-        password: ""
+        phoneNumber: "",
+        password: "",
+        role: "patient",
+        gender: "Male",
+        age: 30
     });
+    const [userDetails, setUserDetails] = React.useState(null);
 
     const handleSignUpInput = e => {
         const { name, value } = e.target;
@@ -131,6 +134,31 @@ export default function SignUp(props) {
         return isValid;
     };
 
+    const registerUser = async () => {
+        if (signupDetails.firstname === "") {
+            return toastr.success("First name is required");
+        }
+        if (signupDetails.email === "") {
+            return toastr.success("Email is required");
+        }
+        if (signupDetails.phoneNumber === "") {
+            return toastr.success("Phone number is required");
+        }
+        if (signupDetails.password === "") {
+            return toastr.success("Password is required");
+        }
+        try {
+            const response = await post('/api/auth/signup', JSON.stringify(signupDetails));
+            setUserDetails(response.data)
+            toastr.success(response.data.message);
+            navigate("/login");
+        } catch (err) {
+            console.error(err);
+        } finally {
+
+        }
+    };
+
     const userLogin = () => {
         navigate("/dashboard");
     }
@@ -167,10 +195,10 @@ export default function SignUp(props) {
                         <TextField
                             error={emailError}
                             helperText={emailErrorMessage}
-                            id="firstName"
-                            type="firstName"
-                            name="firstName"
-                            value={signupDetails.firstName}
+                            id="firstname"
+                            type="firstname"
+                            name="firstname"
+                            value={signupDetails.firstname}
                             placeholder="First Name"
                             autoFocus
                             required
@@ -186,9 +214,9 @@ export default function SignUp(props) {
                             error={emailError}
                             helperText={emailErrorMessage}
                             id="email"
-                            type="lastName"
-                            name="lastName"
-                            value={signupDetails.lastName}
+                            type="lastname"
+                            name="lastname"
+                            value={signupDetails.lastname}
                             placeholder="Last Name"
                             autoFocus
                             required
@@ -209,6 +237,23 @@ export default function SignUp(props) {
                             value={signupDetails.email}
                             placeholder="your@email.com"
                             autoComplete="email"
+                            autoFocus
+                            required
+                            fullWidth
+                            variant="outlined"
+                            onChange={e => handleSignUpInput(e)}
+                            color={emailError ? 'error' : 'primary'}
+                        />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel htmlFor="email">phone Number</FormLabel>
+                        <TextField
+                            error={emailError}
+                            helperText={emailErrorMessage}
+                            id="phoneNumber"
+                            type="number"
+                            name="phoneNumber"
+                            value={signupDetails.phoneNumber}
                             autoFocus
                             required
                             fullWidth
@@ -241,7 +286,7 @@ export default function SignUp(props) {
                         fullWidth
                         variant="contained"
                         style={{ backgroundColor: "#8bc63f", color: "#FFF" }}
-                        onClick={userLogin}
+                        onClick={registerUser}
                     >
                         Sign Up
                     </Button>
