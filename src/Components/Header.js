@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import styles from '../Styles/landing.module.css'
 
 const HeaderComponent = () => {
+    const authToken = sessionStorage.getItem("authToken") || null;
+    const userLogout = () => {
+        sessionStorage.removeItem("authToken");
+        sessionStorage.removeItem("role");
+    }
     return (
         <>
         <header>
@@ -26,7 +31,9 @@ const HeaderComponent = () => {
                         <Link to="/">Contact</Link>
                     </li>
                     <li>
-                        <Link to="/login">Login</Link>
+                        {
+                            authToken ? <Link to="/login">Login</Link> : <Link to="/login" onClick={userLogout}>Logout</Link>
+                        }
                     </li>
                 </ul>
             </nav>
