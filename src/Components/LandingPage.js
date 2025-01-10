@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderComponent from './Header';
 import HealthTopicsCardComponent from '../Common/HealthTopicsCard';
 import LatestNewsCardComponent from '../Common/LatestNewsCard'
-import styles from '../Styles/landing.module.css'
+import styles from '../Styles/landing.module.css';
+import { get, post } from '../Utils/api';
 
 const DashboardComponent = () => {
     const [ dashboardData, setDashboardData ] = useState({
@@ -36,6 +37,21 @@ const DashboardComponent = () => {
             }
         ]
     });
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await get('/people'); 
+            console.log('response :: ', response.data)
+          } catch (err) {
+            console.error(err);
+          } finally {
+          
+          }
+        };
+    
+        fetchData();
+      }, [])
 
     const displayHealthTopics = () => {
         return (
