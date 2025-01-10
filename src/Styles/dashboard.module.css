@@ -14,6 +14,7 @@
 .contentSection {
     width: 85%;
     background: #ffff;
+    padding: 60px 20px;
 }
 
 .navSectionHeader {
@@ -38,4 +39,45 @@
 .active {
     font-weight: bold;
     font-size: 16px;
+}
+
+.contentHeading {
+    font-weight: bold;
+    font-size: 32px;
+    padding-bottom: 20px;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease, transform 0.3s ease; 
+    margin-bottom: 10px;
+}
+
+.listWithBorder {
+    border-bottom: 1px solid black;
+}
+
+.eachAppointment{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+    div{
+        width: 33%;
+        padding: 10px 0;
+    }
+}
+
+.greenButton {
+    background-color: #8bc63f !important;
+    padding: 10px 20px !important;
+    color: #ffff !important;
+    margin-bottom: 15px !important;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
 }

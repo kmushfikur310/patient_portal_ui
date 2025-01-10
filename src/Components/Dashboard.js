@@ -1,7 +1,40 @@
-import styles from '../Styles/dashboard.module.css'
+import React, { useState } from 'react';
+import styles from '../Styles/dashboard.module.css';
+import CommonListCardComponent from '../Common/CommonCard';
 import { Link } from 'react-router-dom';
 
 const DashboardComponent = () => {
+    const [userData, setUserData] = useState({
+        name: 'John',
+        appointmentData :{
+            heading: "Today's Appointments",
+            details: [
+                {
+                    time: '9:00 AM',
+                    patientName: 'John Doe',
+                    reason: 'Annula Check-up'
+                },
+                {
+                    time: '10:30 AM',
+                    patientName: 'Jane Smith',
+                    reason: 'Follow-up'
+                },
+            ]
+        },
+        patientsData: {
+            heading: "Recent Patients",
+            details: [
+                {
+                    name: 'Alice Johnson',
+                    lastVisit: '2023-06-01',
+                },
+                {
+                    name: 'Bob Williams',
+                    lastVisit: '2023-05-28'
+                }
+            ]
+        }
+    });
     return (
         <>
           <div className={styles.container}>
@@ -30,7 +63,11 @@ const DashboardComponent = () => {
                     </ul>
                 </nav>
             </div>
-            <div className={styles.contentSection}>Content</div>  
+            {userData && <div className={styles.contentSection}>
+                <div className={styles.contentHeading}>Welcome, {userData?.name}</div> 
+                <CommonListCardComponent cardData={userData?.appointmentData} type='appointments'/> 
+                <CommonListCardComponent cardData={userData?.patientsData} type='patients'/>   
+            </div>}
           </div>  
         </>
     )
