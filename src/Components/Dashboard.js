@@ -1,16 +1,37 @@
 import React, { useState } from 'react';
 import styles from '../Styles/dashboard.module.css';
-import SimpleCardComponent from  '../Common/SimpleCard'
+import CommonListCardComponent from '../Common/CommonCard';
 import { Link } from 'react-router-dom';
 
 const DashboardComponent = () => {
     const [userData, setUserData] = useState({
         name: 'John',
         appointmentData :{
-            appointmentHead: 'Upcoming Appointments',
-            appointments: [
-                'Next appointment: Dr. Smith on June 15, 2023 at 10:00 AM',
-                'Following: Dr. Johnson on June 22, 2023 at 2:00 PM'
+            heading: "Today's Appointments",
+            details: [
+                {
+                    time: '9:00 AM',
+                    patientName: 'John Doe',
+                    reason: 'Annula Check-up'
+                },
+                {
+                    time: '10:30 AM',
+                    patientName: 'Jane Smith',
+                    reason: 'Follow-up'
+                },
+            ]
+        },
+        patientsData: {
+            heading: "Recent Patients",
+            details: [
+                {
+                    name: 'Alice Johnson',
+                    lastVisit: '2023-06-01',
+                },
+                {
+                    name: 'Bob Williams',
+                    lastVisit: '2023-05-28'
+                }
             ]
         }
     });
@@ -44,7 +65,8 @@ const DashboardComponent = () => {
             </div>
             {userData && <div className={styles.contentSection}>
                 <div className={styles.contentHeading}>Welcome, {userData?.name}</div> 
-                <SimpleCardComponent cardData={userData?.appointmentData}/>   
+                <CommonListCardComponent cardData={userData?.appointmentData} type='appointments'/> 
+                <CommonListCardComponent cardData={userData?.patientsData} type='patients'/>   
             </div>}
           </div>  
         </>
