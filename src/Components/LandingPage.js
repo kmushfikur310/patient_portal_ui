@@ -6,43 +6,13 @@ import styles from '../Styles/landing.module.css';
 import { get, post } from '../Utils/api';
 
 const DashboardComponent = () => {
-    const [ dashboardData, setDashboardData ] = useState({
-        healthTopics: [
-            {
-                heading: 'head 1',
-                description: ' desc 1',
-                learnMoreLink: 'link'
-            },
-            {
-                heading: 'head 2',
-                description: ' desc 1',
-                learnMoreLink: 'link'
-            },
-            {
-                heading: 'head 3',
-                description: ' desc 1',
-                learnMoreLink: 'link'
-            },
-            {
-                heading: 'head 4',
-                description: ' desc 1',
-                learnMoreLink: 'link'
-            },
-        ],
-        healthNews: [
-            {
-                heading: ' News 1',
-                description: ' news desc',
-                articleLink: 'link'
-            }
-        ]
-    });
+    const [ dashboardData, setDashboardData ] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await get('/people'); 
-            console.log('response :: ', response.data)
+            const response = await get('https://run.mocky.io/v3/062aafe1-c5f8-4eea-9aef-570405ea602f'); 
+            setDashboardData(response.data)
           } catch (err) {
             console.error(err);
           } finally {

@@ -20,6 +20,7 @@
         justify-content: space-between;
         width: 50%;
         text-align: center;
+        list-style-type: none;
     }
     li a{
         color: #ffff;
@@ -55,10 +56,14 @@
 }
 
 .greenButton {
-    background-color: #8bc63f;
-    padding: 10px 20px;
-    color: #ffff;
-    margin-bottom: 15px;
+    background-color: #8bc63f !important;
+    padding: 10px 20px !important;
+    color: #ffff !important;
+    margin-bottom: 15px !important;
+}
+
+.cardContent {
+    min-height: 50%;
 }
 .topicsSection {
 
