@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../Styles/dashboard.module.css';
 import CommonListCardComponent from '../Common/CommonCard';
 import { Link } from 'react-router-dom';
+import { get, post } from '../Utils/api';
+
 
 const DashboardComponent = () => {
     const [userData, setUserData] = useState({
@@ -35,6 +37,23 @@ const DashboardComponent = () => {
             ]
         }
     });
+
+    useEffect(() => {
+
+
+        const fetchData = async () => {
+            try {
+              const response = await get('http://localhost:8080/api/appointment/getTodaysAppointments'); 
+              setUserData(response.data)
+            } catch (err) {
+              console.error(err);
+            } finally {
+            
+            }
+          };
+      
+          fetchData();
+    },[])
 
     // https://run.mocky.io/v3/f9ea2727-fafe-44a7-963c-c084714ecb82
 
