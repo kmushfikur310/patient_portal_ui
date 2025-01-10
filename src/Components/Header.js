@@ -31,9 +31,7 @@ const HeaderComponent = () => {
                         <Link to="/">Contact</Link>
                     </li>
                     <li>
-                        {
-                            authToken ? <Link to="/login">Login</Link> : <Link to="/login" onClick={userLogout}>Logout</Link>
-                        }
+                        <Link to="/login">Login</Link>
                     </li>
                 </ul>
             </nav>
